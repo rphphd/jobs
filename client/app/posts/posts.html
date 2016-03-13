@@ -1,0 +1,105 @@
+<div class="row browserupgrade" ng-controller="PostsCtrl">
+  <div class="col-md-12">
+    <div class="page-header">
+      <h3>Jobs Listing
+      </h3>
+    </div>
+    <div class="form-horizontal">
+      <div class="form-group">
+        <label for="inputKeywords" class="col-sm-2 control-label">Keywords</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="keywords"
+              ng-blur="handleBlur()" id="inputKeywords" placeholder="keywords">
+        </div>
+      </div>
+      <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-2">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+               ng-model="telecommuting"
+               name="telecommuting">
+              Telecommuting
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-offset-1 col-sm-2">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"
+               ng-model="contract"
+               name="contract">
+              Contract
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-offset-1 col-sm-2">
+        <a href="#" ng-click="refreshJobs($event)">
+          <i class="text-primary fa fa-refresh"></i></a>
+      </div>
+
+    </div>
+    </div>
+    <a class="col-md-2" href="#" ng-click="citiesShown = !citiesShown;">cities&nbsp;
+        <i class="fa {{ citiesShown ? 'fa-angle-down' : 'fa-angle-up'}}"></i></a>
+    <a class="col-md-2" href="#" ng-click="wordsShown = !wordsShown;">words&nbsp;
+        <i class="fa {{ wordsShown ? 'fa-angle-down' : 'fa-angle-up'}}"></i></a>
+    <span ng-show="waiting" class="">
+              <i class="text-primary fa fa-spinner fa-spin"></i></span>
+    <div class="clearfix"></div>
+    <div ng-class="citiesShown ? 'well well-sm' : '' ">
+      <ul class="list-inline text-center" ng-show="citiesShown">
+        <li class="checkbox">
+          <label>
+            <input type="checkbox"
+               ng-model="allCitiesSelected"
+               ng-click="allCities()">
+              &nbsp;
+          </label>
+        </li>
+        <li class="checkbox" ng-repeat="jc in jobCities">
+          <label>
+            <input type="checkbox"
+               ng-model="citiesSelected[jc]"
+               ng-click="citySelected(jc)">
+              {{jc}}
+          </label>
+        </li>
+      </ul>
+    </div>
+    <div ng-class="wordsShown ? 'well well-sm' : '' ">
+      <ul class="list-inline text-center" ng-show="wordsShown">
+        <li class="checkbox" ng-repeat="wd in jobWords">
+          <label>
+            <input type="checkbox"
+               ng-model="wordsSelected[wd]"
+               ng-click="wordSelected(wd)">
+              {{wd}}
+          </label>
+        </li>
+      </ul>
+    </div>
+    <list-pagination></list-pagination>
+    <table id="jobListings" ng-show="waiting || jobsPage.length>0" class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th ng-repeat="heading in headings">{{heading}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="job in jobsPage">
+          <td ng-repeat="heading in headings">
+            <a ng-show="heading==='description'" href="{{job.link}}" target="_blank">
+              {{ job[heading] }}
+            </a>
+            <span ng-show="heading!=='description'">
+              {{ heading==='when' ? (job[heading] | date:'mediumDate' ) : job[heading] }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="!waiting && jobsPage.length<=0">No Jobs Found</div>
+  </div>
+</div>
+

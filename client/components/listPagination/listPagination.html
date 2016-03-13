@@ -1,0 +1,21 @@
+<div class="row" id="listing-pages" ng-show="firstItem>0">
+	<div class="col-md-4">
+		<ul class="pagination">
+			<li ng-show="totalItems>0">Items {{ firstItem }} to {{ lastItem }} of {{ totalItems }}</li>
+	  </ul>
+	</div>
+
+	<div class="col-md-8 text-center">
+	<ul class="pagination" ng-show="totalItems>0">
+		<li class="{{ curPage==1 ? 'disabled' : 'navi' }}"><a ng-click="propsFirstLink($event)" href="#">&lt; &lt;</a></li>
+		<li class="{{ curPage==1 ? 'disabled' : 'navi' }}"><a ng-click="propsPrevLink($event)" href="#">&lt;</a></li>
+
+    <li class="{{ pg==curPage ? 'active' : 'navi' }}" ng-repeat="pg in pages">
+      <a ng-click="gotoPage($event,pg)" href="#/">{{ pg }}</a>
+    </li>
+
+		<li class="{{ curPage==maxPage ? 'disabled' : 'navi' }}"><a ng-click="propsNextLink($event)" href="#">&gt;</a></li>
+		<li class="{{ curPage==maxPage ? 'disabled' : 'navi' }}"><a ng-click="propsLastLink($event)" href="#">&gt; &gt;</a></li>
+	</ul>
+	</div>
+</div>
